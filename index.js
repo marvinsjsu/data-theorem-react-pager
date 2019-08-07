@@ -13,6 +13,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "d
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -53,51 +55,59 @@ function (_React$Component) {
       initialized: false,
       page: _this.props.pages[0],
       pages: _this.props.pages,
-      getLabel: _this.props.getLabel,
       pageIndex: 0,
       pageInfo: {},
       pageInfoIsLoading: true,
-      pageInfoError: null,
-      currentPageLabel: function () {
-        var pageIndex = _this.state.pageIndex;
-        return _this.getLabel(pageIndex);
-      }(),
-      pageLabels: function () {
-        var pages = _this.state.pages;
-        return pages.map(function (page, idx) {
-          return _this.getLabel(idx);
-        });
-      }(),
-      goPrevious: function goPrevious() {
-        _this.setState(function (currState) {
-          return {
-            pageIndex: _this._getPageIndex(1, currState.pageIndex, currState.pages.length)
-          };
-        });
-      },
-      goNext: function goNext() {
-        _this.setState(function (currState) {
-          return {
-            pageIndex: _this._getPageIndex(-1, currState.pageIndex, currState.pages.length)
-          };
-        });
-      },
-      goToLabel: function goToLabel(label) {
-        var pageLabels = _this.state.pageLabels;
-        var pageIndex = pageLabels.indexOf(label);
+      pageInfoError: null
+    });
 
-        if (pageIndex !== -1) {
-          _this.setState({
-            pageIndex: pageIndex
-          });
-        }
-      },
-      openSupportDialog: function openSupportDialog() {},
-      _getPageIndex: function _getPageIndex(step, currIndex, pageCount) {
-        var newPageIndex = currIndex + step;
-        var mod = newPageIndex % pageCount;
-        return mod > 0 ? mod : Math.abs(pageCount + mod) % pageCount;
+    _defineProperty(_assertThisInitialized(_this), "currentPageLabel", function () {
+      var pageIndex = _this.state.pageIndex;
+      var getLabel = _this.props.getLabel;
+      return getLabel(pageIndex);
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "pageLabels", function () {
+      var pages = _this.state.pages;
+      var getLabel = _this.props.getLabel;
+      return pages.map(function (page, idx) {
+        return getLabel(idx);
+      });
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "goPrevious", function () {
+      _this.setState(function (currState) {
+        return {
+          pageIndex: _this._getPageIndex(1, currState.pageIndex, currState.pages.length)
+        };
+      });
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "goNext", function () {
+      _this.setState(function (currState) {
+        return {
+          pageIndex: _this._getPageIndex(-1, currState.pageIndex, currState.pages.length)
+        };
+      });
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "goToLabel", function (label) {
+      var pageLabels = _this.state.pageLabels;
+      var pageIndex = pageLabels.indexOf(label);
+
+      if (pageIndex !== -1) {
+        _this.setState({
+          pageIndex: pageIndex
+        });
       }
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "openSupportDialog", function () {});
+
+    _defineProperty(_assertThisInitialized(_this), "_getPageIndex", function (step, currIndex, pageCount) {
+      var newPageIndex = currIndex + step;
+      var mod = newPageIndex % pageCount;
+      return mod > 0 ? mod : Math.abs(pageCount + mod) % pageCount;
     });
 
     return _this;
@@ -116,7 +126,14 @@ function (_React$Component) {
     key: "render",
     value: function render() {
       var Component = this.props.children;
-      return _react["default"].createElement(Component, this.state);
+      return _react["default"].createElement(Component, _extends({}, this.state, {
+        goNext: this.goNext,
+        goPrevious: this.goPrevious,
+        goToLabel: this.goToLabel,
+        openSupportDialog: this.openSupportDialog,
+        pageLabels: this.pageLabels(),
+        currentPageLabel: this.currentPageLabel()
+      }));
     }
   }]);
 

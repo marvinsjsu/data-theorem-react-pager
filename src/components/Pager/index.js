@@ -20,54 +20,56 @@ export default class Pager extends React.Component {
     initialized: false,
     page: this.props.pages[0],
     pages: this.props.pages,
-    getLabel: this.props.getLabel,
     pageIndex: 0,
     pageInfo: {},
     pageInfoIsLoading: true,
-    pageInfoError: null,
+    pageInfoError: null
+  };
 
-    currentPageLabel: (() => {
-      const { pageIndex } = this.state;
-      return this.getLabel(pageIndex);
-    })(),
-    pageLabels: (() => {
-      const { pages } = this.state;
-      return pages.map((page, idx) => (this.getLabel(idx)));
-    })(),
+  currentPageLabel = () => {
+    const { pageIndex } = this.state;
+    const { getLabel } = this.props;
+    return getLabel(pageIndex);
+  };
 
+  pageLabels = () => {
+    const { pages } = this.state;
+    const { getLabel } = this.props;
 
-    goPrevious: () => {
-      this.setState((currState) => ({
-        pageIndex: this._getPageIndex(1, currState.pageIndex, currState.pages.length)
-      }));
-    },
+    return pages.map((page, idx) => (getLabel(idx)));
+  };
 
-    goNext: () => {
-      this.setState((currState) => ({
-        pageIndex: this._getPageIndex(-1, currState.pageIndex, currState.pages.length)
-      }));
-    },
+  goPrevious = () => {
+    this.setState((currState) => ({
+      pageIndex: this._getPageIndex(1, currState.pageIndex, currState.pages.length)
+    }));
+  };
 
-    goToLabel: (label) => {
-      const { pageLabels } = this.state;
-      const pageIndex = pageLabels.indexOf(label);
+  goNext = () => {
+    this.setState((currState) => ({
+      pageIndex: this._getPageIndex(-1, currState.pageIndex, currState.pages.length)
+    }));
+  };
 
-      if (pageIndex !== -1) {
-        this.setState({
-          pageIndex
-        });
-      }
-    },
+  goToLabel = (label) => {
+    const { pageLabels } = this.state;
+    const pageIndex = pageLabels.indexOf(label);
 
-    openSupportDialog: () => {
-
-    },
-
-    _getPageIndex: (step, currIndex, pageCount) => {
-      let newPageIndex = currIndex + step;
-      let mod = newPageIndex % pageCount;
-      return mod > 0 ? mod : Math.abs(pageCount + mod) % pageCount;
+    if (pageIndex !== -1) {
+      this.setState({
+        pageIndex
+      });
     }
+  };
+
+  openSupportDialog = () => {
+
+  };
+
+  _getPageIndex = (step, currIndex, pageCount) => {
+    let newPageIndex = currIndex + step;
+    let mod = newPageIndex % pageCount;
+    return mod > 0 ? mod : Math.abs(pageCount + mod) % pageCount;
   };
 
   componentDidMount () {
@@ -76,13 +78,21 @@ export default class Pager extends React.Component {
     if (!children) {
       return false;
     }
-  }
+  };
 
   render () {
     const { children: Component } = this.props;
 
     return (
-      <Component {...this.state} />
+      <Component
+        {...this.state}
+        goNext={this.goNext}
+        goPrevious={this.goPrevious}
+        goToLabel={this.goToLabel}
+        openSupportDialog={this.openSupportDialog}
+        pageLabels={this.pageLabels()}
+        currentPageLabel={this.currentPageLabel()}
+      />
     );
   }
 }
