@@ -8,7 +8,7 @@ export default class Pager extends React.Component {
     getLabel: PropTypes.func.isRequired,
     children: PropTypes.node.isRequired,
     supportRequestUrl: PropTypes.string,
-    pageInfoUrl: PropTypes.string
+    pageInfoUrl: PropTypes.func
   };
 
   static defaultProps = {
@@ -47,8 +47,15 @@ export default class Pager extends React.Component {
       }));
     },
 
-    goToLabel: () => {
+    goToLabel: (label) => {
+      const { pageLabels } = this.state;
+      const pageIndex = pageLabels.indexOf(label);
 
+      if (pageIndex !== -1) {
+        this.setState({
+          pageIndex
+        });
+      }
     },
 
     openSupportDialog: () => {
