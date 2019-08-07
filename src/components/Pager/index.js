@@ -40,24 +40,36 @@ export default class Pager extends React.Component {
   };
 
   goPrevious = () => {
-    this.setState((currState) => ({
-      pageIndex: this._getPageIndex(1, currState.pageIndex, currState.pages.length)
-    }));
+    this.setState((currState) => {
+      const newPageIndex = this._getPageIndex(1, currState.pageIndex, currState.pages.length);
+      const newPage = currState.pages[newPageIndex];
+      return {
+        pageIndex: newPageIndex,
+        page: newPage
+      }
+    });
   };
 
   goNext = () => {
-    this.setState((currState) => ({
-      pageIndex: this._getPageIndex(-1, currState.pageIndex, currState.pages.length)
-    }));
+    this.setState((currState) => {
+      const newPageIndex = this._getPageIndex(-1, currState.pageIndex, currState.pages.length);
+      const newPage = currState.pages[newPageIndex];
+      return {
+        pageIndex: newPageIndex,
+        page: newPage
+      }
+    });
   };
 
   goToLabel = (label) => {
-    const { pageLabels } = this.state;
-    const pageIndex = pageLabels.indexOf(label);
+    const { pages } = this.state;
+    const pageIndex = this.pageLabels().indexOf(label);
+    const page = pages[pageIndex];
 
     if (pageIndex !== -1) {
       this.setState({
-        pageIndex
+        pageIndex,
+        page
       });
     }
   };

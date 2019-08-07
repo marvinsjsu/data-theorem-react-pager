@@ -77,27 +77,39 @@ function (_React$Component) {
 
     _defineProperty(_assertThisInitialized(_this), "goPrevious", function () {
       _this.setState(function (currState) {
+        var newPageIndex = _this._getPageIndex(1, currState.pageIndex, currState.pages.length);
+
+        var newPage = currState.pages[newPageIndex];
         return {
-          pageIndex: _this._getPageIndex(1, currState.pageIndex, currState.pages.length)
+          pageIndex: newPageIndex,
+          page: newPage
         };
       });
     });
 
     _defineProperty(_assertThisInitialized(_this), "goNext", function () {
       _this.setState(function (currState) {
+        var newPageIndex = _this._getPageIndex(-1, currState.pageIndex, currState.pages.length);
+
+        var newPage = currState.pages[newPageIndex];
         return {
-          pageIndex: _this._getPageIndex(-1, currState.pageIndex, currState.pages.length)
+          pageIndex: newPageIndex,
+          page: newPage
         };
       });
     });
 
     _defineProperty(_assertThisInitialized(_this), "goToLabel", function (label) {
-      var pageLabels = _this.state.pageLabels;
-      var pageIndex = pageLabels.indexOf(label);
+      var pages = _this.state.pages;
+
+      var pageIndex = _this.pageLabels().indexOf(label);
+
+      var page = pages[pageIndex];
 
       if (pageIndex !== -1) {
         _this.setState({
-          pageIndex: pageIndex
+          pageIndex: pageIndex,
+          page: page
         });
       }
     });
