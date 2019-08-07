@@ -6,7 +6,7 @@ export default class Pager extends React.Component {
   static propTypes = {
     pages: PropTypes.array.isRequired,
     getLabel: PropTypes.func.isRequired,
-    children: PropTypes.node.isRequired,
+    children: PropTypes.func.isRequired,
     supportRequestUrl: PropTypes.string,
     pageInfoUrl: PropTypes.func
   };
@@ -22,6 +22,7 @@ export default class Pager extends React.Component {
     pages: this.props.pages,
     getLabel: this.props.getLabel,
     pageIndex: 0,
+    pageInfo: {},
     pageInfoIsLoading: true,
     pageInfoError: null,
 

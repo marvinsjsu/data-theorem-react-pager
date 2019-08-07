@@ -21,13 +21,15 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 var Pager =
 /*#__PURE__*/
@@ -35,17 +37,86 @@ function (_React$Component) {
   _inherits(Pager, _React$Component);
 
   function Pager() {
+    var _getPrototypeOf2;
+
+    var _this;
+
     _classCallCheck(this, Pager);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(Pager).apply(this, arguments));
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(Pager)).call.apply(_getPrototypeOf2, [this].concat(args)));
+
+    _defineProperty(_assertThisInitialized(_this), "state", {
+      initialized: false,
+      page: _this.props.pages[0],
+      pages: _this.props.pages,
+      getLabel: _this.props.getLabel,
+      pageIndex: 0,
+      pageInfo: {},
+      pageInfoIsLoading: true,
+      pageInfoError: null,
+      currentPageLabel: function () {
+        var pageIndex = _this.state.pageIndex;
+        return _this.getLabel(pageIndex);
+      }(),
+      pageLabels: function () {
+        var pages = _this.state.pages;
+        return pages.map(function (page, idx) {
+          return _this.getLabel(idx);
+        });
+      }(),
+      goPrevious: function goPrevious() {
+        _this.setState(function (currState) {
+          return {
+            pageIndex: _this._getPageIndex(1, currState.pageIndex, currState.pages.length)
+          };
+        });
+      },
+      goNext: function goNext() {
+        _this.setState(function (currState) {
+          return {
+            pageIndex: _this._getPageIndex(-1, currState.pageIndex, currState.pages.length)
+          };
+        });
+      },
+      goToLabel: function goToLabel(label) {
+        var pageLabels = _this.state.pageLabels;
+        var pageIndex = pageLabels.indexOf(label);
+
+        if (pageIndex !== -1) {
+          _this.setState({
+            pageIndex: pageIndex
+          });
+        }
+      },
+      openSupportDialog: function openSupportDialog() {},
+      _getPageIndex: function _getPageIndex(step, currIndex, pageCount) {
+        var newPageIndex = currIndex + step;
+        var mod = newPageIndex % pageCount;
+        return mod > 0 ? mod : Math.abs(pageCount + mod) % pageCount;
+      }
+    });
+
+    return _this;
   }
 
   _createClass(Pager, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var children = this.props.children;
+
+      if (!children) {
+        return false;
+      }
+    }
+  }, {
     key: "render",
     value: function render() {
-      return _react["default"].createElement("div", {
-        className: "pager"
-      }, _react["default"].createElement("h2", null, "Pager Hello"));
+      var Component = this.props.children;
+      return _react["default"].createElement(Component, this.state);
     }
   }]);
 
@@ -53,3 +124,38 @@ function (_React$Component) {
 }(_react["default"].Component);
 
 exports["default"] = Pager;
+
+_defineProperty(Pager, "propTypes", {
+  pages: _propTypes["default"].array.isRequired,
+  getLabel: _propTypes["default"].func.isRequired,
+  children: _propTypes["default"].func.isRequired,
+  supportRequestUrl: _propTypes["default"].string,
+  pageInfoUrl: _propTypes["default"].func
+});
+
+_defineProperty(Pager, "defaultProps", {
+  supportRequestUrl: null,
+  pageInfoUrl: null
+});
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.getPage = getPage;
+
+function getPage(url) {
+  return fetch(url).then(errorHandler).then(function (res) {
+    return true;
+  })["catch"](function (e) {
+    return false;
+  });
+}
+
+function errorHandler(res) {
+  if (!res.ok) {
+    throw Error(res.statusText);
+  }
+
+  return res;
+}
