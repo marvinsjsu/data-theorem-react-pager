@@ -1,6 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { getPage } from '../utils/api';
+
+const GO_BACK = 1;
+const GO_PREV = -1;
+
 export default class Pager extends React.Component {
 
   static propTypes = {
@@ -26,6 +31,15 @@ export default class Pager extends React.Component {
     pageInfoError: null
   };
 
+  componentDidMount () {
+    if (!this.props.children) return false;
+    this.mounted = true;
+  };
+
+  componentWillUnmount () {
+    this.mounted = false;
+  };
+
   currentPageLabel = () => {
     const { pageIndex } = this.state;
     const { getLabel } = this.props;
@@ -40,25 +54,11 @@ export default class Pager extends React.Component {
   };
 
   goPrevious = () => {
-    this.setState((currState) => {
-      const newPageIndex = this._getPageIndex(-1, currState.pageIndex, currState.pages.length);
-      const newPage = currState.pages[newPageIndex];
-      return {
-        pageIndex: newPageIndex,
-        page: newPage
-      }
-    });
+    this._movePage(GO_PREV);
   };
 
   goNext = () => {
-    this.setState((currState) => {
-      const newPageIndex = this._getPageIndex(1, currState.pageIndex, currState.pages.length);
-      const newPage = currState.pages[newPageIndex];
-      return {
-        pageIndex: newPageIndex,
-        page: newPage
-      }
-    });
+    this._movePage(GO_BACK);
   };
 
   goToLabel = (label) => {
@@ -84,11 +84,40 @@ export default class Pager extends React.Component {
     return mod > 0 ? mod : Math.abs(pageCount + mod) % pageCount;
   };
 
-  componentDidMount () {
-    const { children } = this.props;
+  _movePage = (step) => {
+    this.setState((currState) => {
+      const newPageIndex = this._getPageIndex(step, currState.pageIndex, currState.pages.length);
+      const newPage = currState.pages[newPageIndex];
+      return {
+        pageIndex: newPageIndex,
+        page: newPage
+      }
+    });
+  };
 
-    if (!children) {
-      return false;
+  _loadPageUrl = () => {
+    const { pageInfoUrl } = this.props;
+    const pageLabel = this.currentPageLabel();
+
+    if (pageInfoUrl && pageLabel) {
+      getPage(pageInfoUrl(pageLabel))
+        .then((pageInfo) => {
+
+          if (this.mounted) {
+            this.setState({
+              pageInfo,
+              pageInfoIsLoading: true
+            });
+          }
+        })
+        .catch((error) => {
+
+          if (this.mounted) {
+            this.setState({
+              pageInfoError: error
+            });
+          }
+        });
     }
   };
 

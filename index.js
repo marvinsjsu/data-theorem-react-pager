@@ -9,6 +9,8 @@ var _react = _interopRequireDefault(require("react"));
 
 var _propTypes = _interopRequireDefault(require("prop-types"));
 
+var _api = require("../utils/api");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -32,6 +34,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var GO_BACK = 1;
+var GO_PREV = -1;
 
 var Pager =
 /*#__PURE__*/
@@ -76,27 +81,11 @@ function (_React$Component) {
     });
 
     _defineProperty(_assertThisInitialized(_this), "goPrevious", function () {
-      _this.setState(function (currState) {
-        var newPageIndex = _this._getPageIndex(-1, currState.pageIndex, currState.pages.length);
-
-        var newPage = currState.pages[newPageIndex];
-        return {
-          pageIndex: newPageIndex,
-          page: newPage
-        };
-      });
+      _this._movePage(GO_PREV);
     });
 
     _defineProperty(_assertThisInitialized(_this), "goNext", function () {
-      _this.setState(function (currState) {
-        var newPageIndex = _this._getPageIndex(1, currState.pageIndex, currState.pages.length);
-
-        var newPage = currState.pages[newPageIndex];
-        return {
-          pageIndex: newPageIndex,
-          page: newPage
-        };
-      });
+      _this._movePage(GO_BACK);
     });
 
     _defineProperty(_assertThisInitialized(_this), "goToLabel", function (label) {
@@ -122,17 +111,54 @@ function (_React$Component) {
       return mod > 0 ? mod : Math.abs(pageCount + mod) % pageCount;
     });
 
+    _defineProperty(_assertThisInitialized(_this), "_movePage", function (step) {
+      _this.setState(function (currState) {
+        var newPageIndex = _this._getPageIndex(step, currState.pageIndex, currState.pages.length);
+
+        var newPage = currState.pages[newPageIndex];
+        return {
+          pageIndex: newPageIndex,
+          page: newPage
+        };
+      });
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "_loadPageUrl", function () {
+      var pageInfoUrl = _this.props.pageInfoUrl;
+
+      var pageLabel = _this.currentPageLabel();
+
+      if (pageInfoUrl && pageLabel) {
+        (0, _api.getPage)(pageInfoUrl(pageLabel)).then(function (pageInfo) {
+          if (_this.mounted) {
+            _this.setState({
+              pageInfo: pageInfo,
+              pageInfoIsLoading: true
+            });
+          }
+        })["catch"](function (error) {
+          if (_this.mounted) {
+            _this.setState({
+              pageInfoError: error
+            });
+          }
+        });
+      }
+    });
+
     return _this;
   }
 
   _createClass(Pager, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      var children = this.props.children;
-
-      if (!children) {
-        return false;
-      }
+      if (!this.props.children) return false;
+      this.mounted = true;
+    }
+  }, {
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {
+      this.mounted = false;
     }
   }, {
     key: "render",
@@ -175,7 +201,11 @@ exports.getPage = getPage;
 
 function getPage(url) {
   return fetch(url).then(errorHandler).then(function (res) {
-    return true;
+    return res.json();
+  }).then(function (page) {
+    if (page.message) {
+      throw new Error(getErrorMsg(page.message));
+    }
   })["catch"](function (e) {
     return false;
   });
@@ -187,4 +217,12 @@ function errorHandler(res) {
   }
 
   return res;
+}
+
+function getErrorMsg(message, username) {
+  if (message === 'Not Found') {
+    return "".concat(username, " doesn't exist");
+  }
+
+  return message;
 }
