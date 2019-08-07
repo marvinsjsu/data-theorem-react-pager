@@ -9,7 +9,7 @@
     "transpile": "./node_modules/.bin/babel src -d dist --copy-files",
     "prepublishOnly": "npm run transpile && npm run compile:sass",
     "local:test": "./node_modules/.bin/babel src --out-file index.js && npm run compile:sass",
-    "compile:sass": "node-sass src/sass/main.scss dist/css/main.css",
+    "compile:sass": "node-sass src/sass/main.scss dist/css/main.css"
   },
   "babel": {
     "presets": [
