@@ -9,7 +9,7 @@ var _react = _interopRequireDefault(require("react"));
 
 var _propTypes = _interopRequireDefault(require("prop-types"));
 
-var _api = require("./utils/api");
+var _api = require("../../utils/api");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
@@ -192,6 +192,19 @@ _defineProperty(Pager, "defaultProps", {
   supportRequestUrl: null,
   pageInfoUrl: null
 });
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _Pager = _interopRequireDefault(require("./components/Pager"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+var _default = _Pager["default"];
+exports["default"] = _default;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
