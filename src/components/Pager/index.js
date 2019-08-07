@@ -32,8 +32,11 @@ export default class Pager extends React.Component {
   };
 
   componentDidMount () {
-    if (!this.props.children) return false;
+    const { pages, children, getLabel } = this.props;
+
+    if (!children || !pages || !getLabel) return false;
     this.mounted = true;
+    this._loadPageUrl();
   };
 
   componentWillUnmount () {
@@ -106,7 +109,7 @@ export default class Pager extends React.Component {
 
 console.log('pageInfo: ', pageInfo);
 
-          if (this.mounted) {
+          if (this.mounted && pageInfo) {
             this.setState({
               pageInfo,
               pageInfoIsLoading: true
