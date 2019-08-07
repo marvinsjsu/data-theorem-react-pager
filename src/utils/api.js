@@ -4,6 +4,7 @@ export function getPage(url) {
     .then((res) => res.json())
     .then((page) => {
       if(page.message) {
+        console.log(page.message);
         throw new Error(getErrorMsg(page.message));
       }
     })
@@ -12,6 +13,7 @@ export function getPage(url) {
 
 function errorHandler (res) {
   if (!res.ok) {
+    console.log('res: ', res);
     throw Error(res.statusText);
   }
 

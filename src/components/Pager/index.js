@@ -92,7 +92,7 @@ export default class Pager extends React.Component {
         pageIndex: newPageIndex,
         page: newPage
       }
-    });
+    }, this._loadPageUrl);
   };
 
   _loadPageUrl = () => {
@@ -103,6 +103,9 @@ export default class Pager extends React.Component {
       getPage(pageInfoUrl(pageLabel))
         .then((pageInfo) => {
 
+
+console.log('pageInfo: ', pageInfo);
+
           if (this.mounted) {
             this.setState({
               pageInfo,
@@ -111,6 +114,10 @@ export default class Pager extends React.Component {
           }
         })
         .catch((error) => {
+
+
+console.log('error: ', error);
+
 
           if (this.mounted) {
             this.setState({
