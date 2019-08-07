@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { getPage, sendSupporMessage } from '../../utils/api';
+import SupportForm from './SupportForm';
+import { getPage, sendSupportMessage } from '../../utils/api';
 
 const GO_BACK = 1;
 const GO_PREV = -1;
@@ -28,7 +29,9 @@ export default class Pager extends React.Component {
     pageIndex: 0,
     pageInfo: {},
     pageInfoIsLoading: true,
-    pageInfoError: null
+    pageInfoError: null,
+    showSupportDialog: false,
+    sendMessageError: null
   };
 
   componentDidMount () {
@@ -79,6 +82,38 @@ export default class Pager extends React.Component {
 
   openSupportDialog = () => {
 
+debugger;
+    const { supportRequestUrl } = this.props;
+
+console.log("OPENSUPPORTDIALOG");
+
+    if (!supportRequestUrl) return false;
+    this.setState((currState) => ({
+      showSupportDialog: !currState.showSupportDialog
+    }));
+  };
+
+  sendSupportMessage = ({ name, email, message }) => {
+    if (name && email && message) {
+      const { supportRequestUrl } = this.props;
+
+      sendSupportMessage(supportRequestUrl, {
+          name,
+          email,
+          message
+        })
+        .then((res) => {
+          console.log('res: ', res);
+        })
+        .catch((e) => {
+          console.log('error: ', e);
+
+          this.setState({
+            sendMessageError: e.message
+          });
+        });
+
+    }
   };
 
   _getPageIndex = (step, currIndex, pageCount) => {
@@ -132,18 +167,27 @@ console.log('error: ', error);
   };
 
   render () {
-    const { children: Component } = this.props;
+    const { showSupportDialog } = this.state;
+    const { children: Component, supportRequestUrl } = this.props;
 
     return (
-      <Component
-        {...this.state}
-        goNext={this.goNext}
-        goPrevious={this.goPrevious}
-        goToLabel={this.goToLabel}
-        openSupportDialog={this.openSupportDialog}
-        pageLabels={this.pageLabels()}
-        currentPageLabel={this.currentPageLabel()}
-      />
+      <React.Fragment>
+        <Component
+          {...this.state}
+          goNext={this.goNext}
+          goPrevious={this.goPrevious}
+          goToLabel={this.goToLabel}
+          openSupportDialog={this.openSupportDialog}
+          pageLabels={this.pageLabels()}
+          currentPageLabel={this.currentPageLabel()}
+        />
+        {showSupportDialog && (
+          <SupportForm
+            supportRequestUrl={supportRequestUrl}
+            sendSupporMessage={this.sendSupporMessage}
+          />
+        )}
+      </React.Fragment>
     );
   }
 }
