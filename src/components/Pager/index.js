@@ -41,7 +41,7 @@ export default class Pager extends React.Component {
 
   goPrevious = () => {
     this.setState((currState) => {
-      const newPageIndex = this._getPageIndex(1, currState.pageIndex, currState.pages.length);
+      const newPageIndex = this._getPageIndex(-1, currState.pageIndex, currState.pages.length);
       const newPage = currState.pages[newPageIndex];
       return {
         pageIndex: newPageIndex,
@@ -52,7 +52,7 @@ export default class Pager extends React.Component {
 
   goNext = () => {
     this.setState((currState) => {
-      const newPageIndex = this._getPageIndex(-1, currState.pageIndex, currState.pages.length);
+      const newPageIndex = this._getPageIndex(1, currState.pageIndex, currState.pages.length);
       const newPage = currState.pages[newPageIndex];
       return {
         pageIndex: newPageIndex,

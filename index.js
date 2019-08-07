@@ -77,7 +77,7 @@ function (_React$Component) {
 
     _defineProperty(_assertThisInitialized(_this), "goPrevious", function () {
       _this.setState(function (currState) {
-        var newPageIndex = _this._getPageIndex(1, currState.pageIndex, currState.pages.length);
+        var newPageIndex = _this._getPageIndex(-1, currState.pageIndex, currState.pages.length);
 
         var newPage = currState.pages[newPageIndex];
         return {
@@ -89,7 +89,7 @@ function (_React$Component) {
 
     _defineProperty(_assertThisInitialized(_this), "goNext", function () {
       _this.setState(function (currState) {
-        var newPageIndex = _this._getPageIndex(-1, currState.pageIndex, currState.pages.length);
+        var newPageIndex = _this._getPageIndex(1, currState.pageIndex, currState.pages.length);
 
         var newPage = currState.pages[newPageIndex];
         return {
