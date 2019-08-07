@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { getPage } from '../../utils/api';
+import { getPage, sendSupporMessage } from '../../utils/api';
 
 const GO_BACK = 1;
 const GO_PREV = -1;

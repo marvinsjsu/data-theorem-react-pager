@@ -8,7 +8,20 @@ export function getPage(url) {
         throw new Error(getErrorMsg(page.message));
       }
     })
-    .catch((e) => false);
+    .catch((e) => e.message);
+}
+
+export function sendSupportMessage(url, data) {
+  return fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data),
+    })
+    .then((res) => res.json())
+    .then((res) => console.log('Success: ', JSON.stringify(res)))
+    .catch((e) => e.message);
 }
 
 function errorHandler (res) {
@@ -27,3 +40,4 @@ function getErrorMsg (message, username) {
 
   return message;
 }
+
