@@ -12,5 +12,5 @@ npm install https://github.com/marvinsjsu/data-theorem-react-pager
 
 ```bash
 import React from 'react';
-import Pager from 'data-theorem-pager';;
+import Pager from 'data-theorem-pager';
 ```
