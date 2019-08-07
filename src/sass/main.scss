@@ -1,0 +1,69 @@
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html {
+  // This defines what 1rem is
+  font-size: 62.5%;
+
+  // @include respond(tablet-landscape) {
+  //   font-size: 56.25%;
+  // }
+
+  // @include respond(tablet-portrait) {
+  //   font-size: 50%;
+  // }
+}
+
+body {
+  box-sizing: border-box;
+}
+
+ul {
+  padding: 0;
+}
+
+li {
+  list-style-type: none;
+}
+
+
+.container {
+
+  &--form {
+
+  }
+}
+
+.input {
+
+  &--name, &--email {
+
+  }
+
+  &--name:hover, &--email:hover {
+
+  }
+
+  &--name:active, &--email:active {
+
+  }
+}
+
+.textarea {
+
+  &--message {
+
+  }
+}
+
+.btn {
+
+  &:hover {
+
+  }
+}

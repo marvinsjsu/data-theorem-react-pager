@@ -40,6 +40,7 @@ export default class SupportForm extends React.Component {
           <div className='row'>
             <input
               id='name'
+              className='input--name'
               type='text'
               name='name'
               value={name}
@@ -50,6 +51,7 @@ export default class SupportForm extends React.Component {
           <div className='row'>
             <input
               id='email'
+              className='input--email'
               type='email'
               name='email'
               value={email}
@@ -60,10 +62,20 @@ export default class SupportForm extends React.Component {
           <div className='row'>
             <textarea
               id='message'
+              className='textarea--message'
               name='message'
               value={message}
               onChange={(e) => this.onChange('message', e)}
             />
+          </div>
+
+          <div className='row'>
+            <button
+              type='submit'
+              className='btn'
+            >
+              Submit
+            </button>
           </div>
         </form>
       </div>
