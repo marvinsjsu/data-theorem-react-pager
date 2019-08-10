@@ -6,6 +6,11 @@
   box-sizing: inherit;
 }
 
+$color-primary: #55c57a;
+$color-black: #000;
+$color-white: #FFF;
+$color-grey-dark: #777;
+
 html {
   // This defines what 1rem is
   font-size: 62.5%;
@@ -35,14 +40,56 @@ li {
 .container {
 
   &--form {
+    height: 100vh;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba($color-black, .8);
+    z-index: 9999;
+    opacity: 1;
+    visibility: visible;
+    transition: all .3s;
 
+    form {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    &__close {
+      border: none;
+      border-radius: 50%;
+      background-color: transparent;
+      color: $color-white;
+      position: absolute;
+      top: 2.5rem;
+      right: 2.5rem;
+      font-size: 3rem;
+      text-decoration: none;
+      display: inline-block;
+      transition: all .2s;
+      line-height: 1;
+
+      &:hover {
+          color: $color-grey-dark;
+      }
+
+      &:focus{
+        outline:none !important;
+      }
+    }
   }
 }
 
 .input {
 
   &--name, &--email {
-
+    height: 8rem;
+    width: 20rem;
+    border: 1px solid #eee;
   }
 
   &--name:hover, &--email:hover {

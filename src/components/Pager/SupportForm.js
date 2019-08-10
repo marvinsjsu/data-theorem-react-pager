@@ -33,9 +33,11 @@ export default class SupportForm extends React.Component {
 
   render () {
     const { name, email, message } = this.state;
+    const { closeSupportDialog } = this.props;
 
     return (
-      <div className='container--form'>
+      <div className='container--form' id='support-form'>
+        <button onClick={closeSupportDialog} className="container--form__close">&times;</button>
         <form onSubmit={this.onSubmit}>
           <div className='row'>
             <input

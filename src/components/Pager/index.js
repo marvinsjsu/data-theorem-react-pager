@@ -92,6 +92,12 @@ console.log("OPENSUPPORTDIALOG");
     }));
   };
 
+  closeSupportDialog = () => {
+    this.setState({
+      showSupportDialog: false
+    });
+  };
+
   sendSupportMessage = ({ name, email, message }) => {
     if (name && email && message) {
       const { supportRequestUrl } = this.props;
@@ -185,7 +191,8 @@ console.log('error: ', error);
         {showSupportDialog && (
           <SupportForm
             supportRequestUrl={supportRequestUrl}
-            sendSupporMessage={this.sendSupporMessage}
+            sendSupportMessage={this.sendSupportMessage}
+            closeSupportDialog={this.closeSupportDialog}
           />
         )}
       </React.Fragment>
