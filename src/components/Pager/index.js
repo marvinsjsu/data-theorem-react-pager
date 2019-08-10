@@ -24,8 +24,7 @@ export default class Pager extends React.Component {
 
   state = {
     initialized: false,
-    page: this.props.pages[0],
-    pages: this.props.pages,
+    page: null,
     pageIndex: 0,
     pageInfo: {},
     pageInfoIsLoading: true,
@@ -37,9 +36,11 @@ export default class Pager extends React.Component {
   componentDidMount () {
     const { pages, children, getLabel } = this.props;
 
-    if (!children || !pages || !getLabel) return false;
+    if (!children || !pages || !pages[0] || !getLabel) return false;
     this.mounted = true;
-    this._loadPageUrl();
+    this.setState({
+      page: pages[0]
+    }, this._loadPageUrl);
   };
 
   componentWillUnmount () {
@@ -53,9 +54,7 @@ export default class Pager extends React.Component {
   };
 
   pageLabels = () => {
-    const { pages } = this.state;
-    const { getLabel } = this.props;
-
+    const { getLabel, pages } = this.props;
     return pages.map((page, idx) => (getLabel(idx)));
   };
 
@@ -68,7 +67,7 @@ export default class Pager extends React.Component {
   };
 
   goToLabel = (label) => {
-    const { pages } = this.state;
+    const { pages } = this.props;
     const pageIndex = this.pageLabels().indexOf(label);
     const page = pages[pageIndex];
 
@@ -123,9 +122,11 @@ console.log("OPENSUPPORTDIALOG");
   };
 
   _movePage = (step) => {
+    const { pages } = this.props;
+
     this.setState((currState) => {
-      const newPageIndex = this._getPageIndex(step, currState.pageIndex, currState.pages.length);
-      const newPage = currState.pages[newPageIndex];
+      const newPageIndex = this._getPageIndex(step, currState.pageIndex, pages.length);
+      const newPage = pages[newPageIndex];
       return {
         pageIndex: newPageIndex,
         page: newPage
