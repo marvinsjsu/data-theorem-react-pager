@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 export default class SupportForm extends React.Component {
 
   static propTypes = {
-    sendSupportMessage: PropTypes.func.isRequired,
+    sendMessage: PropTypes.func.isRequired,
     supportRequestUrl: PropTypes.string.isRequired
   };
 
@@ -14,15 +14,10 @@ export default class SupportForm extends React.Component {
     message: ''
   };
 
-  componentDidMount() {
-
-  };
-
   onSubmit = (e) => {
     e.preventDefault();
-    const { sendSupportMessage } = this.props;
-
-
+    const { sendMessage } = this.props;
+    sendMessage({...this.state});
   };
 
   onChange = (key, e) => {
@@ -37,15 +32,22 @@ export default class SupportForm extends React.Component {
 
     return (
       <div className='container--form' id='support-form'>
-        <button onClick={closeSupportDialog} className="container--form__close">&times;</button>
         <form onSubmit={this.onSubmit}>
+          <h4 className='title'>Support Request Form</h4>
+          <button
+            className="container--form__close"
+            onClick={closeSupportDialog}
+          >
+            &times;
+          </button>
           <div className='row'>
             <input
               id='name'
-              className='input--name'
+              className='input'
               type='text'
               name='name'
               value={name}
+              placeholder='name'
               onChange={(e) => this.onChange('name', e)}
             />
           </div>
@@ -53,10 +55,11 @@ export default class SupportForm extends React.Component {
           <div className='row'>
             <input
               id='email'
-              className='input--email'
+              className='input'
               type='email'
               name='email'
               value={email}
+              placeholder='email'
               onChange={(e) => this.onChange('email', e)}
             />
           </div>
@@ -67,6 +70,7 @@ export default class SupportForm extends React.Component {
               className='textarea--message'
               name='message'
               value={message}
+              placeholder='message'
               onChange={(e) => this.onChange('message', e)}
             />
           </div>
@@ -75,6 +79,7 @@ export default class SupportForm extends React.Component {
             <button
               type='submit'
               className='btn'
+              disabled={!name || !email || !message}
             >
               Submit
             </button>

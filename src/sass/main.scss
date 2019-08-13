@@ -6,10 +6,13 @@
   box-sizing: inherit;
 }
 
-$color-primary: #55c57a;
 $color-black: #000;
 $color-white: #FFF;
+$color-grey-light-1: #f7f7f7;
+$color-grey-light-2: #eee;
 $color-grey-dark: #777;
+$color-grey-dark-2: #999;
+$color-grey-dark-3: #333;
 
 html {
   // This defines what 1rem is
@@ -52,21 +55,126 @@ li {
     transition: all .3s;
 
     form {
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+      align-items: center;
+      min-width: 30rem;
+      width: 25%;
       position: absolute;
       top: 50%;
       left: 50%;
       opacity: 1;
       transform: translate(-50%, -50%) scale(1);
+      padding: 1rem;
+      background-color: $color-white;
+      border-radius: 3px;
+
+      .title {
+        font-size: 2.5rem;
+        font-weight: 500;
+        line-height: 1.5rem;
+        color: $color-grey-dark-3;
+        padding: 1.5rem .5rem;
+      }
+
+      .row {
+        width: 100%;
+        padding: .25rem;
+      }
+
+      .input, .textarea {
+        margin: 1rem 0;
+        font-size: 1.5rem;
+        font-family: inherit;
+        color: inherit;
+        padding: 1.5rem 2rem;
+        border-radius: 3px;
+        background-color: rbga($color-grey-dark-2, .4);
+        border: 1px solid $color-grey-dark-2;
+        width: 100%;
+        display: block;
+        transition: all .3s;
+
+        &:focus {
+          outline: none;
+          box-shadow: 0 1rem 2rem rgba($color-black, .1);
+          border: 1px solid $color-grey-dark-3;
+        }
+
+        &:focus:invalid {
+          border-bottom: 3px solid $color-grey-dark;
+        }
+
+        &::-webkit-input-placeholder {
+          color: $color-grey-dark-2;
+          // text-align: center;
+        }
+
+        &--message {
+          height: 14rem;
+          width: 100%;
+          border: 1px solid $color-grey-dark-2;
+          border-radius: 3px;
+          padding: 1.5rem 2rem;
+          margin: 1.5rem 0;
+          font-family: inherit;
+          font-size: 1.5rem;
+          color: inherit;
+          transition: all .3s;
+          background-color: rbga($color-grey-dark-2, .4);
+
+          &:focus {
+            outline: none;
+            box-shadow: 0 1rem 2rem rgba($color-black, .1);
+            border: 1px solid $color-grey-dark-3;
+          }
+
+          &::placeholder {
+            color: $color-grey-dark-2;
+          }
+        }
+      }
+
+      .btn {
+        font-family: inherit;
+        font-size: 2.5rem;
+        color: $color-white;
+        padding: .75rem 2.5rem;
+        margin: .75rem;
+        border: 1px solid rgba(59, 123, 226, .8);
+        border-radius: 3px;
+        background: rgba(59, 123, 226, .8);
+        transition: all .3s;
+
+        &:hover {
+          cursor: pointer;
+          border: 1px solid rgba(59, 123, 226, 1);
+          background: rgba(59, 123, 226, 1);
+          outline: none;
+          box-shadow: 0 1rem 2rem rgba($color-black, .1);
+        }
+
+        &:disabled {
+          cursor: default;
+          border: transparent;
+          background: rgba(59, 123, 226, .5);
+        }
+
+        &:focus{
+          outline:none !important;
+        }
+      }
     }
 
     &__close {
       border: none;
-      border-radius: 50%;
       background-color: transparent;
-      color: $color-white;
+      color: $color-grey-dark-3;
       position: absolute;
-      top: 2.5rem;
-      right: 2.5rem;
+      top: -.5rem;
+      right: .25rem;
       font-size: 3rem;
       text-decoration: none;
       display: inline-block;
@@ -84,33 +192,3 @@ li {
   }
 }
 
-.input {
-
-  &--name, &--email {
-    height: 8rem;
-    width: 20rem;
-    border: 1px solid #eee;
-  }
-
-  &--name:hover, &--email:hover {
-
-  }
-
-  &--name:active, &--email:active {
-
-  }
-}
-
-.textarea {
-
-  &--message {
-
-  }
-}
-
-.btn {
-
-  &:hover {
-
-  }
-}

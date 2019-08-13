@@ -24,7 +24,6 @@ export default class Pager extends React.Component {
 
   state = {
     initialized: false,
-    page: null,
     pageIndex: 0,
     pageInfo: {},
     pageInfoIsLoading: true,
@@ -38,9 +37,7 @@ export default class Pager extends React.Component {
 
     if (!children || !pages || !pages[0] || !getLabel) return false;
     this.mounted = true;
-    this.setState({
-      page: pages[0]
-    }, this._loadPageUrl);
+    this._loadPageUrl();
   };
 
   componentWillUnmount () {
@@ -67,29 +64,22 @@ export default class Pager extends React.Component {
   };
 
   goToLabel = (label) => {
-    const { pages } = this.props;
     const pageIndex = this.pageLabels().indexOf(label);
-    const page = pages[pageIndex];
 
     if (pageIndex !== -1) {
       this.setState({
-        pageIndex,
-        page
+        pageIndex
       });
     }
   };
 
   openSupportDialog = () => {
-
-debugger;
     const { supportRequestUrl } = this.props;
 
-console.log("OPENSUPPORTDIALOG");
-
     if (!supportRequestUrl) return false;
-    this.setState((currState) => ({
-      showSupportDialog: !currState.showSupportDialog
-    }));
+    this.setState({
+      showSupportDialog: true,
+    });
   };
 
   closeSupportDialog = () => {
@@ -98,15 +88,15 @@ console.log("OPENSUPPORTDIALOG");
     });
   };
 
-  sendSupportMessage = ({ name, email, message }) => {
+  sendMessage = ({ name, email, message }) => {
     if (name && email && message) {
       const { supportRequestUrl } = this.props;
 
       sendSupportMessage(supportRequestUrl, {
-          name,
-          email,
-          message
-        })
+        name,
+        email,
+        message
+      })
         .then((res) => {
           console.log('res: ', res);
         })
@@ -174,13 +164,15 @@ console.log('error: ', error);
   };
 
   render () {
-    const { showSupportDialog } = this.state;
-    const { children: Component, supportRequestUrl } = this.props;
+    const { showSupportDialog, pageIndex } = this.state;
+    const { children: Component, supportRequestUrl, pages } = this.props;
+    const page = pages[pageIndex];
 
     return (
       <React.Fragment>
         <Component
           {...this.state}
+          page={page}
           goNext={this.goNext}
           goPrevious={this.goPrevious}
           goToLabel={this.goToLabel}
@@ -191,7 +183,7 @@ console.log('error: ', error);
         {showSupportDialog && (
           <SupportForm
             supportRequestUrl={supportRequestUrl}
-            sendSupportMessage={this.sendSupportMessage}
+            sendMessage={this.sendMessage}
             closeSupportDialog={this.closeSupportDialog}
           />
         )}
