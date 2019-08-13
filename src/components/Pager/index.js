@@ -25,8 +25,8 @@ export default class Pager extends React.Component {
   state = {
     initialized: false,
     pageIndex: 0,
-    pageInfo: {},
-    pageInfoIsLoading: true,
+    pageInfo: null,
+    pageInfoIsLoading: false,
     pageInfoError: null,
     showSupportDialog: false
   };
@@ -127,6 +127,7 @@ export default class Pager extends React.Component {
           .catch((error) => {
             if (this.mounted) {
               this.setState({
+                pageInfo: null,
                 pageInfoError: error.message,
                 pageInfoIsLoading: false
               });
