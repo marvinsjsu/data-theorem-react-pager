@@ -1,28 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { sendSupportMessage } from '../../utils/api';
+
 export default class SupportForm extends React.Component {
 
   static propTypes = {
-    sendMessage: PropTypes.func.isRequired,
-    supportRequestUrl: PropTypes.string.isRequired
+    supportRequestUrl: PropTypes.string.isRequired,
+    closeSupportDialog: PropTypes.func.isRequired
   };
 
   state = {
     name: '',
     email: '',
-    message: ''
+    message: '',
+    successMessage: null,
+    errorMessage: null
   };
 
   onSubmit = (e) => {
     e.preventDefault();
-    console.log('onSubmit');
-    const { sendMessage } = this.props;
-    sendMessage({...this.state});
+    this._sendMessage({...this.state});
   };
 
   catchEnter = (e) => {
-
     if (e.key === 'Enter') {
       e.preventDefault();
     }
@@ -32,6 +33,44 @@ export default class SupportForm extends React.Component {
     this.setState({
       [key]: e.target.value
     });
+  };
+
+  _sendMessage = ({ name, email, message }) => {
+    if (name && email && message) {
+      const { supportRequestUrl } = this.props;
+
+      sendSupportMessage(supportRequestUrl, {
+        name,
+        email,
+        message
+      })
+        .then((res) => {
+          console.log('res: ', res);
+          if ([200, 201, 202, 204].includes(res.status)) {
+            this.setState({
+              successMessage: 'Support request was successfully submitted.',
+              name: '',
+              email: '',
+              message: '',
+              errorMessage: null
+            });
+          }
+
+          if (res.status === 400) {
+            return res.json();
+          }
+        })
+        .then((data) => {
+          this.setState({
+            errorMessage: data.message || 'Something went wrong. Please try again.'
+          });
+        })
+        .catch((e) => {
+          this.setState({
+            errorMessage: e.message
+          });
+        });
+    }
   };
 
   render () {

@@ -28,8 +28,7 @@ export default class Pager extends React.Component {
     pageInfo: {},
     pageInfoIsLoading: true,
     pageInfoError: null,
-    showSupportDialog: false,
-    sendMessageError: null
+    showSupportDialog: false
   };
 
   componentDidMount () {
@@ -69,7 +68,7 @@ export default class Pager extends React.Component {
     if (pageIndex !== -1) {
       this.setState({
         pageIndex
-      });
+      }, this._loadPageUrl);
     }
   };
 
@@ -86,28 +85,6 @@ export default class Pager extends React.Component {
     this.setState({
       showSupportDialog: false
     });
-  };
-
-  sendMessage = ({ name, email, message }) => {
-    if (name && email && message) {
-      const { supportRequestUrl } = this.props;
-      sendSupportMessage(supportRequestUrl, {
-        name,
-        email,
-        message
-      })
-        .then((res) => {
-          console.log('res: ', res);
-        })
-        .catch((e) => {
-          console.log('error: ', e);
-
-          this.setState({
-            sendMessageError: e.message
-          });
-        });
-
-    }
   };
 
   _getPageIndex = (step, currIndex, pageCount) => {
@@ -130,36 +107,33 @@ export default class Pager extends React.Component {
   };
 
   _loadPageUrl = () => {
-    const { pageInfoUrl } = this.props;
-    const pageLabel = this.currentPageLabel();
+    this.setState({
+      pageInfoError: null,
+      pageInfoIsLoading: true
+    }, () => {
+      const { pageInfoUrl } = this.props;
+      const pageLabel = this.currentPageLabel();
 
-    if (pageInfoUrl && pageLabel) {
-      getPage(pageInfoUrl(pageLabel))
-        .then((pageInfo) => {
-
-
-console.log('pageInfo: ', pageInfo);
-
-          if (this.mounted && pageInfo) {
-            this.setState({
-              pageInfo,
-              pageInfoIsLoading: true
-            });
-          }
-        })
-        .catch((error) => {
-
-
-console.log('error: ', error);
-
-
-          if (this.mounted) {
-            this.setState({
-              pageInfoError: error
-            });
-          }
-        });
-    }
+      if (pageInfoUrl && pageLabel) {
+        getPage(pageInfoUrl(pageLabel))
+          .then((pageInfo) => {
+            if (this.mounted && pageInfo) {
+              this.setState({
+                pageInfo,
+                pageInfoIsLoading: false
+              });
+            }
+          })
+          .catch((error) => {
+            if (this.mounted) {
+              this.setState({
+                pageInfoError: error.message,
+                pageInfoIsLoading: false
+              });
+            }
+          });
+      }
+    });
   };
 
   render () {
@@ -182,7 +156,6 @@ console.log('error: ', error);
         {showSupportDialog && (
           <SupportForm
             supportRequestUrl={supportRequestUrl}
-            sendMessage={this.sendMessage}
             closeSupportDialog={this.closeSupportDialog}
           />
         )}
