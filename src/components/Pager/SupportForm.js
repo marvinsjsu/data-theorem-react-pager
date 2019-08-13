@@ -47,7 +47,7 @@ export default class SupportForm extends React.Component {
         .then((res) => {
           if ([200, 201, 202, 204].includes(res.status)) {
             this.setState({
-              successMessage: 'Support request was successfully submitted.',
+              successMessage: 'Support request was submitted.',
               name: '',
               email: '',
               message: '',
