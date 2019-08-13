@@ -39,9 +39,7 @@ export default class SupportForm extends React.Component {
     if (name && email && message) {
       const { supportRequestUrl } = this.props;
 
-      // sendSupportMessage(supportRequestUrl, {
-      sendSupportMessage('http://localhost:5000/api/v1/todos', {
-
+      sendSupportMessage(supportRequestUrl, {
         name,
         email,
         message
