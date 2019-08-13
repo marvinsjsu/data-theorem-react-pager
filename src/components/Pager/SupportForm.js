@@ -39,13 +39,14 @@ export default class SupportForm extends React.Component {
     if (name && email && message) {
       const { supportRequestUrl } = this.props;
 
-      sendSupportMessage(supportRequestUrl, {
+      // sendSupportMessage(supportRequestUrl, {
+      sendSupportMessage('http://localhost:5000/api/v1/todos', {
+
         name,
         email,
         message
       })
         .then((res) => {
-          console.log('res: ', res);
           if ([200, 201, 202, 204].includes(res.status)) {
             this.setState({
               successMessage: 'Support request was successfully submitted.',
@@ -61,20 +62,22 @@ export default class SupportForm extends React.Component {
           }
         })
         .then((data) => {
-          this.setState({
-            errorMessage: data.message || 'Something went wrong. Please try again.'
-          });
+          if (data && data.message) {
+            this.setState({
+              errorMessage: data.message || 'Something went wrong. Please try again.'
+            });
+          }
         })
         .catch((e) => {
           this.setState({
             errorMessage: e.message
-          });
+          }, () => console.log(this.state));
         });
     }
   };
 
   render () {
-    const { name, email, message } = this.state;
+    const { name, email, message, successMessage, errorMessage } = this.state;
     const { closeSupportDialog } = this.props;
 
     return (
@@ -87,6 +90,20 @@ export default class SupportForm extends React.Component {
           >
             &times;
           </button>
+          {successMessage && (
+            <div className='row'>
+              <h4 className='message message__success'>
+                {successMessage}
+              </h4>
+            </div>
+          )}
+          {errorMessage && (
+            <div className='row'>
+              <h4 className='message message__error'>
+                {errorMessage}
+              </h4>
+            </div>
+          )}
           <div className='row'>
             <input
               id='name'
