@@ -91,7 +91,6 @@ export default class Pager extends React.Component {
   sendMessage = ({ name, email, message }) => {
     if (name && email && message) {
       const { supportRequestUrl } = this.props;
-
       sendSupportMessage(supportRequestUrl, {
         name,
         email,

@@ -16,8 +16,16 @@ export default class SupportForm extends React.Component {
 
   onSubmit = (e) => {
     e.preventDefault();
+    console.log('onSubmit');
     const { sendMessage } = this.props;
     sendMessage({...this.state});
+  };
+
+  catchEnter = (e) => {
+
+    if (e.key === 'Enter') {
+      e.preventDefault();
+    }
   };
 
   onChange = (key, e) => {
@@ -49,6 +57,8 @@ export default class SupportForm extends React.Component {
               value={name}
               placeholder='name'
               onChange={(e) => this.onChange('name', e)}
+              onKeyDown={this.catchEnter}
+              required
             />
           </div>
 
@@ -61,6 +71,8 @@ export default class SupportForm extends React.Component {
               value={email}
               placeholder='email'
               onChange={(e) => this.onChange('email', e)}
+              onKeyDown={this.catchEnter}
+              required
             />
           </div>
 
@@ -72,6 +84,8 @@ export default class SupportForm extends React.Component {
               value={message}
               placeholder='message'
               onChange={(e) => this.onChange('message', e)}
+              onKeyDown={this.catchEnter}
+              required
             />
           </div>
 
