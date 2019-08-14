@@ -69,7 +69,7 @@ export default class SupportForm extends React.Component {
         .catch((e) => {
           this.setState({
             errorMessage: e.message
-          }, () => console.log(this.state));
+          });
         });
     }
   };
