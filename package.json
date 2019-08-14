@@ -4,8 +4,6 @@
   "description": "a library with Pager component",
   "main": "/dist/index.js",
   "scripts": {
-    "build": "webpack",
-    "start": "webpack-dev-server --mode development",
     "transpile": "./node_modules/.bin/babel src -d dist --copy-files",
     "prepublishOnly": "npm run transpile && npm run compile:sass",
     "local:test": "npm run transpile && npm run compile:sass",
