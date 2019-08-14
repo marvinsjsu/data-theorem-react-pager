@@ -1,0 +1,145 @@
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit; }
+
+html {
+  font-size: 62.5%; }
+
+body {
+  box-sizing: border-box; }
+
+ul {
+  padding: 0; }
+
+li {
+  list-style-type: none; }
+
+.container--form {
+  height: 100vh;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: 9999;
+  opacity: 1;
+  visibility: visible;
+  transition: all .3s; }
+  .container--form form {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+    min-width: 30rem;
+    width: 25%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+    padding: 1rem;
+    background-color: #FFF;
+    border-radius: 3px; }
+    .container--form form .title {
+      font-size: 2.5rem;
+      font-weight: 500;
+      line-height: 1.5rem;
+      color: #777;
+      padding: 1.5rem .5rem; }
+    .container--form form .row {
+      width: 100%;
+      padding: .25rem .75rem; }
+    .container--form form .message {
+      font-size: 2rem;
+      font-weight: 500;
+      font-family: inherit;
+      color: #FFF;
+      padding: .5rem;
+      margin: 1rem 0;
+      border: 1px solid #f7f7f7; }
+      .container--form form .message__error {
+        background: rgba(230, 57, 70, 0.8); }
+      .container--form form .message__success {
+        background: rgba(56, 180, 74, 0.8); }
+    .container--form form .input, .container--form form .textarea {
+      margin: 1rem 0;
+      font-size: 1.5rem;
+      font-family: inherit;
+      color: inherit;
+      padding: 1.5rem 2rem;
+      border-radius: 3px;
+      background-color: rbga(#999, 0.4);
+      border: 1px solid #999;
+      width: 100%;
+      display: block;
+      transition: all .3s; }
+      .container--form form .input:focus, .container--form form .textarea:focus {
+        outline: none;
+        box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.1);
+        border: 1px solid #777; }
+      .container--form form .input:focus:invalid, .container--form form .textarea:focus:invalid {
+        border-bottom: 2px solid #777; }
+      .container--form form .input::-webkit-input-placeholder, .container--form form .textarea::-webkit-input-placeholder {
+        color: #999; }
+      .container--form form .input--message, .container--form form .textarea--message {
+        height: 14rem;
+        width: 100%;
+        border: 1px solid #999;
+        border-radius: 3px;
+        padding: 1.5rem 2rem;
+        margin: 1.5rem 0;
+        font-family: inherit;
+        font-size: 1.5rem;
+        color: inherit;
+        transition: all .3s;
+        background-color: rbga(#999, 0.4); }
+        .container--form form .input--message:focus, .container--form form .textarea--message:focus {
+          outline: none;
+          box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.1);
+          border: 1px solid #777; }
+        .container--form form .input--message:focus:invalid, .container--form form .textarea--message:focus:invalid {
+          border-bottom: 2px solid #777; }
+        .container--form form .input--message::placeholder, .container--form form .textarea--message::placeholder {
+          color: #999; }
+    .container--form form .btn {
+      font-family: inherit;
+      font-size: 2.5rem;
+      color: #FFF;
+      padding: .75rem 2.5rem;
+      margin: .75rem;
+      border: 1px solid rgba(59, 123, 226, 0.8);
+      border-radius: 3px;
+      background: rgba(59, 123, 226, 0.8);
+      transition: all .3s; }
+      .container--form form .btn:hover {
+        cursor: pointer;
+        border: 1px solid #3b7be2;
+        background: #3b7be2;
+        outline: none;
+        box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.1); }
+      .container--form form .btn:disabled {
+        cursor: default;
+        border: transparent;
+        background: rgba(59, 123, 226, 0.5); }
+      .container--form form .btn:focus {
+        outline: none !important; }
+  .container--form__close {
+    border: none;
+    background-color: transparent;
+    color: #777;
+    position: absolute;
+    top: -.5rem;
+    right: .25rem;
+    font-size: 3rem;
+    text-decoration: none;
+    display: inline-block;
+    transition: all .2s;
+    line-height: 1; }
+    .container--form__close:hover {
+      color: #333; }
+    .container--form__close:focus {
+      outline: none !important; }
