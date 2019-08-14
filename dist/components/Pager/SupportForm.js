@@ -113,8 +113,6 @@ function (_React$Component) {
         })["catch"](function (e) {
           _this.setState({
             errorMessage: e.message
-          }, function () {
-            return console.log(_this.state);
           });
         });
       }
