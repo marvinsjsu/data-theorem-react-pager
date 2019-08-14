@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1565759376570" clover="3.2.0">
+  <project timestamp="1565759376570" name="All files">
+    <metrics statements="83" coveredstatements="66" conditionals="48" coveredconditionals="23" methods="30" coveredmethods="22" elements="161" coveredelements="111" complexity="0" loc="83" ncloc="83" packages="1" files="2" classes="2"/>
+    <file name="SupportForm.js" path="/Users/marvin/Projects/InterviewPrep/projects/data-theorem-pager/src/components/Pager/SupportForm.js">
+      <metrics statements="28" coveredstatements="18" conditionals="24" coveredconditionals="7" methods="12" coveredmethods="8"/>
+      <line num="8" count="2" type="stmt"/>
+      <line num="13" count="8" type="stmt"/>
+      <line num="21" count="8" type="stmt"/>
+      <line num="22" count="1" type="stmt"/>
+      <line num="23" count="1" type="stmt"/>
+      <line num="26" count="8" type="stmt"/>
+      <line num="27" count="1" type="cond" truecount="1" falsecount="1"/>
+      <line num="28" count="1" type="stmt"/>
+      <line num="32" count="8" type="stmt"/>
+      <line num="33" count="3" type="stmt"/>
+      <line num="38" count="8" type="stmt"/>
+      <line num="39" count="1" type="cond" truecount="2" falsecount="3"/>
+      <line num="40" count="0" type="stmt"/>
+      <line num="42" count="0" type="stmt"/>
+      <line num="48" count="0" type="cond" truecount="0" falsecount="2"/>
+      <line num="49" count="0" type="stmt"/>
+      <line num="58" count="0" type="cond" truecount="0" falsecount="2"/>
+      <line num="59" count="0" type="stmt"/>
+      <line num="63" count="0" type="cond" truecount="0" falsecount="4"/>
+      <line num="64" count="0" type="stmt"/>
+      <line num="70" count="0" type="stmt"/>
+      <line num="72" count="0" type="stmt"/>
+      <line num="78" count="12" type="stmt"/>
+      <line num="79" count="12" type="stmt"/>
+      <line num="81" count="12" type="stmt"/>
+      <line num="113" count="1" type="stmt"/>
+      <line num="127" count="1" type="stmt"/>
+      <line num="140" count="1" type="stmt"/>
+    </file>
+    <file name="index.js" path="/Users/marvin/Projects/InterviewPrep/projects/data-theorem-pager/src/components/Pager/index.js">
+      <metrics statements="55" coveredstatements="48" conditionals="24" coveredconditionals="16" methods="18" coveredmethods="14"/>
+      <line num="7" count="1" type="stmt"/>
+      <line num="8" count="1" type="stmt"/>
+      <line num="12" count="1" type="stmt"/>
+      <line num="20" count="1" type="stmt"/>
+      <line num="25" count="3" type="stmt"/>
+      <line num="35" count="3" type="stmt"/>
+      <line num="37" count="3" type="cond" truecount="5" falsecount="1"/>
+      <line num="38" count="3" type="stmt"/>
+      <line num="39" count="3" type="stmt"/>
+      <line num="43" count="0" type="stmt"/>
+      <line num="46" count="3" type="stmt"/>
+      <line num="47" count="29" type="stmt"/>
+      <line num="48" count="29" type="stmt"/>
+      <line num="49" count="29" type="stmt"/>
+      <line num="52" count="3" type="stmt"/>
+      <line num="53" count="22" type="stmt"/>
+      <line num="54" count="66" type="stmt"/>
+      <line num="57" count="3" type="stmt"/>
+      <line num="58" count="2" type="stmt"/>
+      <line num="61" count="3" type="stmt"/>
+      <line num="62" count="2" type="stmt"/>
+      <line num="65" count="3" type="stmt"/>
+      <line num="66" count="0" type="stmt"/>
+      <line num="68" count="0" type="cond" truecount="0" falsecount="2"/>
+      <line num="69" count="0" type="stmt"/>
+      <line num="75" count="3" type="stmt"/>
+      <line num="76" count="1" type="stmt"/>
+      <line num="78" count="1" type="cond" truecount="1" falsecount="1"/>
+      <line num="79" count="1" type="stmt"/>
+      <line num="84" count="3" type="stmt"/>
+      <line num="85" count="0" type="stmt"/>
+      <line num="90" count="3" type="stmt"/>
+      <line num="91" count="4" type="stmt"/>
+      <line num="92" count="4" type="stmt"/>
+      <line num="93" count="4" type="cond" truecount="2" falsecount="0"/>
+      <line num="96" count="3" type="stmt"/>
+      <line num="97" count="4" type="stmt"/>
+      <line num="99" count="4" type="stmt"/>
+      <line num="100" count="4" type="stmt"/>
+      <line num="101" count="4" type="stmt"/>
+      <line num="102" count="4" type="stmt"/>
+      <line num="109" count="3" type="stmt"/>
+      <line num="110" count="7" type="stmt"/>
+      <line num="114" count="7" type="stmt"/>
+      <line num="115" count="7" type="stmt"/>
+      <line num="117" count="7" type="cond" truecount="3" falsecount="1"/>
+      <line num="118" count="7" type="stmt"/>
+      <line num="120" count="7" type="cond" truecount="3" falsecount="1"/>
+      <line num="121" count="7" type="stmt"/>
+      <line num="128" count="0" type="cond" truecount="0" falsecount="2"/>
+      <line num="129" count="0" type="stmt"/>
+      <line num="141" count="22" type="stmt"/>
+      <line num="142" count="22" type="stmt"/>
+      <line num="143" count="22" type="stmt"/>
+      <line num="145" count="22" type="stmt"/>
+    </file>
+  </project>
+</coverage>
