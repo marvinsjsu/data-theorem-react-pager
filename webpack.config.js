@@ -1,6 +1,4 @@
 const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   entry: './src/index.js',
@@ -16,15 +14,4 @@ module.exports = {
     ]
   },
   mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
-  plugins: [
-    new HtmlWebpackPlugin({
-      template: 'examples/src/index.html',
-    }),
-    new CopyPlugin([
-      { from: '_redirects' }
-    ])
-  ],
-  devServer: {
-    historyApiFallback: true
-  }
 }
